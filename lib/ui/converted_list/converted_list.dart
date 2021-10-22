@@ -12,6 +12,7 @@ class _ConvertertedListScreenState extends State<ConvertertedListScreen> {
   //stores:---------------------------------------------------------------------
   late CurrencyStore _currencyStore;
   bool isInited = false;
+  static const TextStyle _textStyle = TextStyle(fontSize: 16);
 
   @override
   void didChangeDependencies() {
@@ -34,11 +35,15 @@ class _ConvertertedListScreenState extends State<ConvertertedListScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('${e.key.currencyName}'),
+                      child: Text(
+                        '${e.key.currencyName}',
+                        style: _textStyle,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('${e.value} ${e.key.currencySymbol}'),
+                      child: Text('${e.value} ${e.key.currencySymbol}',
+                          style: _textStyle),
                     )
                   ],
                 )))

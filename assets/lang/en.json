@@ -1,3 +1,9 @@
 {
-  "home_error": "Error"
+  "home_error": "Error",
+  "to": "To",
+  "from": "From",
+  "currency_volume": "Volume of Currency",
+  "currency_converter": "Currency Converter",
+  "converter": "Converter",
+  "curriencies": "Curriencies"
 }

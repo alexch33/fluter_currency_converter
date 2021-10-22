@@ -16,6 +16,9 @@ abstract class _CurrencyStore with Store {
   final ErrorStore errorStore = ErrorStore();
 
   @observable
+  double toValueCurr = 0.0;
+
+  @observable
   List<Currency> currencies = [];
 
   @observable
@@ -30,6 +33,9 @@ abstract class _CurrencyStore with Store {
   @observable
   bool isLoading = true;
 
+  @observable
+  double quantity = 0.0;
+
   // constructor:---------------------------------------------------------------
   _CurrencyStore(this._repository);
 
@@ -37,14 +43,12 @@ abstract class _CurrencyStore with Store {
     try {
       currencies = await _repository.getListOfCurrencies();
       selectedFrom = await _repository.getSelectedCurrency();
+      selectedTo = await _repository.getSelectedTo() ??
+          currencies.where((element) => element.id != selectedFrom.id).first;
 
       Map<Currency, Currency> currenciesMap = _getCurriwnciesMap();
-      currencies.forEach((currency) {
-        if (currency.id != selectedFrom.id) {
-          currenciesMap[currency] = selectedFrom;
-        }
-      });
       converted = await _repository.convertFromTo(currenciesMap);
+      convertVal();
     } catch (error) {
       errorStore.errorMessage = error.toString();
     }
@@ -57,19 +61,39 @@ abstract class _CurrencyStore with Store {
     if (id == null) {
       return;
     }
+
+    if (selectedTo.id == id) {
+      setSelectedToById(
+          currencies.where((element) => element.id != id).first.id);
+    }
     isLoading = true;
+
     selectedFrom = currencies.firstWhere((element) => element.id == id);
     converted = await _repository.convertFromTo(_getCurriwnciesMap());
+
+    convertVal();
 
     isLoading = false;
   }
 
   @action
-  setSelectedToById(String? id) {
+  setSelectedToById(String? id) async {
     if (id == null) {
       return;
     }
+    if (selectedTo.id == id) {
+      await setSelectedFromById(
+          currencies.where((element) => element.id != id).first.id);
+    }
     selectedTo = currencies.firstWhere((element) => element.id == id);
+
+    convertVal();
+  }
+
+  convertVal() {
+    double convertCoef = converted[selectedTo] ?? 0.0;
+
+    toValueCurr = this.quantity * convertCoef;
   }
 
   Map<Currency, Currency> _getCurriwnciesMap() {

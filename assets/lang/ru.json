@@ -1,4 +1,10 @@
 {
-  "home_error": "Ошибка"
+  "home_error": "Ошибка",
+  "to": "В",
+  "from": "Из",
+  "currency_volume": "Объём валюты",
+  "currency_converter": "Конвертер Валют",
+  "converter": "Конвертер",
+  "curriencies": "Валюты"
 }
   

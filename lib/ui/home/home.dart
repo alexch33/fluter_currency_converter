@@ -38,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Currency Converter'),
+        title: Observer(
+          builder: (context) => Text(
+              '${AppLocalizations.of(context)!.translate('currency_converter')}   ${_currencyStore.selectedFrom.currencySymbol}'),
+        ),
       ),
       body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
@@ -50,9 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
-              label: "Converter", icon: Icon(Icons.swap_vert_circle)),
+              label: AppLocalizations.of(context)!.translate('converter'),
+              icon: Icon(Icons.swap_vert_circle)),
           BottomNavigationBarItem(
-              label: "Currencies", icon: Icon(Icons.swap_horiz))
+              label: AppLocalizations.of(context)!.translate('curriencies'),
+              icon: Icon(Icons.swap_horiz))
         ],
       ),
     );
@@ -63,7 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: <Widget>[
         _handleErrorMessage(),
-        buildContent(),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: buildContent(),
+        ),
         Observer(
             builder: (context) => _currencyStore.isLoading
                 ? Center(child: CustomProgressIndicatorWidget())

@@ -4,9 +4,7 @@ class Currency {
   final String id;
 
   Currency(
-      {this.currencyName = 'no name',
-      this.currencySymbol,
-      this.id = 'no id'});
+      {this.currencyName = 'no name', this.currencySymbol, this.id = 'no id'});
 
   factory Currency.fromMap(Map<String, dynamic> json) => Currency(
       currencyName: json['currencyName'],
@@ -18,6 +16,13 @@ class Currency {
         'currencySymbol': currencySymbol,
         'id': id
       };
+
+  String toString() {
+    return '$currencyName $currencySymbol $id';
+  }
+
+  bool operator ==(o) => o is Currency && id == o.id;
+  int get hashCode => id.hashCode;
 
   static final Currency defaultCurrency = Currency(
       currencyName: "United States Dollar", currencySymbol: '\$', id: 'USD');

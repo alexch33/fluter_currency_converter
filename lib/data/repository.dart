@@ -60,4 +60,8 @@ class Repository {
     return _currencyDataSource
         .getCurrencyById(await _sharedPrefsHelper.selectedCurrencyId());
   }
+
+  getSelectedTo() {
+    return null;
+  }
 }
