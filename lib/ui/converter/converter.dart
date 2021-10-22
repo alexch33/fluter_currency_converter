@@ -120,7 +120,7 @@ class _ConverterScreenState extends State<ConverterScreen> {
                 child: Center(
                   child: Text(
                     "${_currencyStore.toValueCurr} ${_currencyStore.selectedTo.currencySymbol}",
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(fontSize: 24), key: const Key("result_text"),
                   ),
                 ))
           ],
