@@ -116,11 +116,13 @@ class _ConverterScreenState extends State<ConverterScreen> {
               ),
             ),
             Expanded(
-              flex: 3,
+                flex: 3,
                 child: Center(
-              child: Text(
-                  "${_currencyStore.toValueCurr} ${_currencyStore.selectedTo.currencySymbol}"),
-            ))
+                  child: Text(
+                    "${_currencyStore.toValueCurr} ${_currencyStore.selectedTo.currencySymbol}",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ))
           ],
         );
       }),

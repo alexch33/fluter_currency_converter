@@ -1,8 +1,10 @@
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:currency_converter/stores/currency/currency_store.dart';
+import 'package:currency_converter/stores/theme/theme_store.dart';
 import 'package:currency_converter/ui/converted_list/converted_list.dart';
 import 'package:currency_converter/ui/converter/converter.dart';
 import 'package:currency_converter/utils/locale/app_localization.dart';
+import 'package:currency_converter/widgets/build_app_bar_buttons.dart';
 import 'package:currency_converter/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //stores:---------------------------------------------------------------------
   int _page = 0;
   late CurrencyStore _currencyStore;
+  late ThemeStore _themeStore;
   bool isInited = false;
 
   final List<Widget> _pages = <Widget>[
@@ -28,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     if (!isInited) {
       _currencyStore = Provider.of<CurrencyStore>(context);
+      _themeStore = Provider.of<ThemeStore>(context);
       _currencyStore.initialize();
       isInited = true;
     }
@@ -38,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [buildThemeButton(context, _themeStore)],
         title: Observer(
           builder: (context) => Text(
               '${AppLocalizations.of(context)!.translate('currency_converter')}   ${_currencyStore.selectedFrom.currencySymbol}'),
@@ -54,10 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
               label: AppLocalizations.of(context)!.translate('converter'),
-              icon: Icon(Icons.swap_vert_circle)),
+              icon: Icon(Icons.swap_vert_circle, size: 32,)),
           BottomNavigationBarItem(
               label: AppLocalizations.of(context)!.translate('curriencies'),
-              icon: Icon(Icons.swap_horiz))
+              icon: Icon(Icons.swap_horiz, size: 32,))
         ],
       ),
     );
